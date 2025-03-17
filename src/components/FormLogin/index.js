@@ -1,33 +1,62 @@
+import { useState, useRef, useEffect } from "react";
 import "./styles.css";
 
 const LoginForm = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const emailRef = useRef(null);
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!username.includes("@") || !username.includes(".")) {
+      setError("Por favor, insira um e-mail válido.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+
+    console.log("Usuário:", username, "Senha:", password);
+    setError("");
+  };
+
   return (
-    <div className="LoginForm">
-      <h2>Login</h2>
-      <label className="name-email" for="email">
-        Email:{" "}
-      </label>
+    <form className="LoginForm" onSubmit={handleSubmit}>
+      <h2>Entrar</h2>
+
+      {error && <p style={{ color: "red", fontSize: "0.9rem" }}>{error}</p>}
+
+      <label htmlFor="email">Email:</label>
       <input
-        className="email"
+        ref={emailRef}
         type="email"
         id="email"
         name="email"
         placeholder="Digite seu email"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
-      <label className="name-password" for="password">
-        Senha
-      </label>
+
+      <label htmlFor="password">Senha:</label>
       <input
-        className="password"
         type="password"
         id="password"
         name="password"
         placeholder="Digite sua senha"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
-      <button className="button" type="submit">
-        Entrar
-      </button>
-    </div>
+
+      <button type="submit">Entrar</button>
+    </form>
   );
 };
 
