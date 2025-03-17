@@ -1,8 +1,16 @@
-import Header from '../../components/Header';
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import LoginForm from "../../components/FormLogin";
 
 function App() {
   return (
-    <Header />  
+    <div className="App">
+      <Header />
+      <Footer />
+    <div className="Login">
+    <LoginForm />
+    </div>
+    </div>
   );
 }
 
